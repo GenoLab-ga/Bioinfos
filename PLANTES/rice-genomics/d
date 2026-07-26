@@ -1,0 +1,73 @@
+cd ~/Documents/github_projet/PLANTES/rice-genomics/results/06_analysis/
+
+# Étape 1 : Convertir VCF → format PLINK
+plink2 \
+    --vcf ~/Documents/github_projet/PLANTES/rice-genomics/results/04_vcf/all_samples.maf0.05.vcf.gz \
+    --make-pgen \
+    --out rice_plink \
+    --threads 10 \
+    2>&1 | tail -10
+
+
+# Étape 2 : PCA sur les variants pruned (LD pruning d'abord)
+plink2 \
+    --pfile rice_plink \
+    --indep-pairwise 50 10 0.1 \
+    --out rice_pruned \
+    --threads 10 \
+    2>&1 | tail -5
+
+
+# Étape 3 : Calculer la PCA
+plink2 \
+    --pfile rice_plink \
+    --extract rice_pruned.prune.in \
+    --pca 8 \
+    --out rice_pca \
+    --threads 10 \
+    2>&1 | tail -10
+
+
+Avec les samples infirieur à 50
+
+# PCA directement sans LD pruning
+# --max-alleles 2 : garde seulement les variants bialléliques
+# --mind 0.1 : exclut les samples avec >10% de données manquantes
+# --geno 0.1 : exclut les variants avec >10% de données manquantes
+
+plink2 \
+    --pfile rice_plink \
+    --max-alleles 2 \
+    --mind 0.1 \
+    --geno 0.1 \
+    --pca 7 \
+    --out rice_pca \
+    --threads 10 \
+    --bad-ld \
+    2>&1 | tail -15
+
+
+Filtre
+
+# Vérifier le taux de missing par sample
+plink2 \
+    --pfile rice_plink \
+    --max-alleles 2 \
+    --missing \
+    --out rice_missing \
+    --threads 10 \
+    --bad-ld \
+    2>&1 | tail -5
+
+cat rice_missing.smiss
+
+
+# PCA sans filtre missing (on garde tout)
+plink2 \
+    --pfile rice_plink \
+    --max-alleles 2 \
+    --geno 0.9 \
+    --pca 7 \
+    --out rice_pca \
+    --threads 10 \
+    --bad-ld \

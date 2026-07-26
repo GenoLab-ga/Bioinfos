@@ -1,0 +1,811 @@
+---
+title: "Molecular Surveillance of Antimalarial Drug Resistance in *Plasmodium falciparum* from Clinical Recurrence Sites in Ethiopia"
+subtitle: "Bioinformatics Analysis Report · BioProject PRJNA1465284"
+author:
+  - name: "Keny Karl Mounguele"
+    affiliation: "GenoLabGab · Independent Computational Biology Initiative"
+    email: "contact@genolabgab.vercel.app"
+    url: "https://genolabgab.vercel.app"
+date: today
+date-format: "MMMM D, YYYY"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 4
+    toc-title: "Table of Contents"
+    toc-location: left
+    number-sections: false
+    code-fold: true
+    code-tools: true
+    highlight-style: github
+    fig-align: center
+    fig-width: 9
+    fig-height: 6
+    embed-resources: true
+    smooth-scroll: true
+    css: report_style.css
+
+
+execute:
+  echo: false
+  warning: false
+  message: false
+
+lang: en
+---
+
+
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(reshape2)
+
+knitr::opts_chunk$set(
+    fig.align = "center",
+    dpi = 300,
+    out.width = "90%"
+)
+```
+
+<!-- ============================================================ -->
+<!-- RÉSUMÉ EXÉCUTIF EN FRANÇAIS -->
+<!-- ============================================================ -->
+
+::: {.callout-note appearance="minimal"}
+## Résumé exécutif (Français)
+
+Cette étude présente une analyse bioinformatique complète de la surveillance
+moléculaire de la résistance aux antipaludéens chez *Plasmodium falciparum*
+dans des sites de résurgence clinique en Éthiopie (BioProject PRJNA1465284,
+326 isolats). Un pipeline reproductible a été développé sous Linux/Ubuntu,
+intégrant le contrôle qualité (FastQC/MultiQC), le trimming (fastp),
+l'alignement sur le génome de référence Pf3D7 (BWA-MEM), l'appel de variants
+(GATK HaplotypeCaller), l'annotation fonctionnelle (SnpEff) et l'analyse de
+génétique des populations (PLINK/vcftools).
+
+**Résultats principaux :** Sept mutations de résistance validées par l'OMS
+ont été identifiées. Le triple mutant *dhfr* (N51I + C59R + S108N) associé
+à la résistance à la sulfadoxine-pyriméthamine présente une prévalence
+quasi-fixée (96.5–99.4%). La mutation *pfcrt*-K76T marqueur de résistance
+à la chloroquine atteint 81%. De manière alarmante, la mutation
+*kelch13*-P441L, marqueur validé OMS de résistance partielle à l'artémisinine,
+a été détectée chez 13/318 isolats (4.1%), répartis en trois clusters
+géographiques distincts, suggérant une dissémination active dans la région.
+
+**Implications :** Ces résultats ont des implications directes pour les
+politiques thérapeutiques antipaludéennes en Éthiopie et soulignent l'urgence
+d'un renforcement de la surveillance moléculaire en Afrique de l'Est.
+
+*Pipeline disponible sur GitHub · GenoLabGab*
+:::
+
+---
+
+# Abstract
+
+Antimalarial drug resistance poses a critical threat to malaria control
+efforts in sub-Saharan Africa. This report presents a comprehensive
+bioinformatics analysis of molecular resistance markers in *Plasmodium
+falciparum* clinical isolates from malaria resurgence sites in Ethiopia,
+using publicly available amplicon sequencing data (BioProject PRJNA1465284,
+n = 326 isolates, PfSMARRTer multiplex protocol).
+
+A reproducible eight-step pipeline was implemented on a Linux/Ubuntu
+workstation, covering raw data retrieval, quality control, adapter trimming,
+reference alignment (Pf3D7), joint genotyping (GATK), functional annotation
+(SnpEff), and population genetic analyses (PLINK, vcftools). A total of
+42 high-quality variants were identified across five resistance loci
+(*kelch13*, *crt*, *mdr1*, *dhfr*, *dhps*), of which 32 were functionally
+annotated, including 7 WHO-validated resistance mutations.
+
+The *dhfr* triple mutant (N51I + C59R + S108N) associated with
+sulfadoxine-pyrimethamine (SP) resistance was found at near-fixation
+frequencies (96.5–99.4%), while *pfcrt*-K76T (chloroquine resistance)
+reached 81%. Critically, *kelch13*-P441L, a WHO-validated partial artemisinin
+resistance marker, was detected in 13/318 isolates (4.1%) across three
+geographically distinct clusters, suggesting active dissemination.
+These findings have direct implications for antimalarial treatment policy
+in Ethiopia and highlight the urgent need for enhanced molecular surveillance
+in East Africa.
+
+**Keywords:** *Plasmodium falciparum*, antimalarial resistance, kelch13,
+molecular surveillance, Ethiopia, artemisinin, bioinformatics pipeline,
+amplicon sequencing
+
+---
+
+# Introduction
+
+Malaria remains one of the most significant infectious diseases globally,
+with *Plasmodium falciparum* responsible for the majority of severe cases
+and deaths, particularly in sub-Saharan Africa. Artemisinin-based combination
+therapies (ACTs) represent the WHO-recommended first-line treatment, yet
+the emergence and spread of resistance threatens decades of progress in
+malaria control.
+
+Molecular surveillance of resistance markers provides an early warning
+system for treatment failures before clinical resistance becomes widespread.
+The *kelch13* gene (*pfkelch13*, PF3D7_1343700) encodes a Kelch domain
+protein whose mutations confer partial artemisinin resistance through
+mechanisms involving reduced ring-stage susceptibility. The WHO has
+validated a growing list of *kelch13* mutations associated with clinical
+treatment failure, including C580Y (dominant in Southeast Asia),
+R539T, and more recently P441L and I622L, identified in the Horn of Africa.
+
+Ethiopia has experienced malaria resurgence in recent years, with increasing
+reports of treatment failures. The PfSMARRTer multiplex amplicon sequencing
+protocol enables simultaneous genotyping of multiple resistance loci
+(*kelch13*, *crt*, *mdr1*, *dhfr*, *dhps*) from clinical samples, providing
+comprehensive resistance profiles at scale.
+
+This report presents an independent bioinformatics reanalysis of
+PRJNA1465284, a dataset from Brown University (2026) generated under the
+AMR-malaria (ACDCP167916, World Bank) and MAREE (R01AI177791, NIH) grants.
+
+---
+
+# Materials and Methods
+
+## Dataset
+
+```{r dataset-table}
+dataset <- data.frame(
+    Parameter = c(
+        "BioProject accession",
+        "Data type",
+        "Organism",
+        "Scope",
+        "Protocol",
+        "Total SRA runs",
+        "Runs analyzed",
+        "Excluded (QC)",
+        "Submission date",
+        "Submitting institution"
+    ),
+    Value = c(
+        "PRJNA1465284",
+        "Targeted Locus (Loci) — Amplicon",
+        "Plasmodium falciparum 3D7",
+        "Multiisolate — clinical recurrence sites",
+        "PfSMARRTer multiplex amplicon sequencing",
+        "326",
+        "318",
+        "8 (per-tile quality failure)",
+        "12-May-2026",
+        "Brown University"
+    )
+)
+
+kable(dataset,
+      caption = "Table 1. Dataset characteristics.",
+      col.names = c("Parameter", "Value"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = FALSE,
+        position = "center"
+    )
+```
+
+## Target Resistance Loci
+
+```{r loci-table}
+loci <- data.frame(
+    Gene = c("kelch13", "crt", "mdr1", "dhfr", "dhps"),
+    ID = c("PF3D7_1343700", "PF3D7_0709000",
+           "PF3D7_0523000", "PF3D7_0417200", "PF3D7_0810800"),
+    Chr = c("13", "7", "5", "4", "8"),
+    Coordinates = c(
+        "1,725,260–1,726,923",
+        "403,223–404,903",
+        "957,881–962,149",
+        "747,928–749,845",
+        "549,994–555,749"
+    ),
+    Drug = c(
+        "Artemisinins (ACT)",
+        "Chloroquine",
+        "Mefloquine / Lumefantrine",
+        "Pyrimethamine (SP)",
+        "Sulfadoxine (SP)"
+    ),
+    Key_mutations = c(
+        "C580Y, R539T, P441L, I622L",
+        "K76T (CVIET haplotype)",
+        "N86Y, Y184F, D1246Y",
+        "N51I, C59R, S108N, I164L",
+        "A437G, K540E, A581G"
+    )
+)
+
+kable(loci,
+      caption = "Table 2. Target resistance loci and key mutations.",
+      col.names = c("Gene", "Gene ID", "Chr",
+                    "Coordinates (Pf3D7)", "Drug Class",
+                    "Key WHO Mutations"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = TRUE
+    ) |>
+    column_spec(1, bold = TRUE)
+```
+
+## Bioinformatics Pipeline
+
+```{r pipeline-fig, fig.cap="Figure 1. Overview of the bioinformatics pipeline."}
+library(ggplot2)
+
+steps <- data.frame(
+    x     = 1:8,
+    y     = rep(1, 8),
+    label = c(
+        "1\nData\nretrieval",
+        "2\nQuality\ncontrol",
+        "3\nAdapter\ntrimming",
+        "4\nReference\nalignment",
+        "5\nVariant\ncalling",
+        "6\nFunctional\nannotation",
+        "7\nPop.\ngenetics",
+        "8\nReport\ngeneration"
+    ),
+    tool = c(
+        "SRA Tools", "FastQC\nMultiQC", "fastp",
+        "BWA-MEM\nsamtools", "GATK 4.6",
+        "SnpEff 5.4", "PLINK\nvcftools", "Quarto"
+    ),
+    color = c(
+        "#888780","#378ADD","#1D9E75","#7F77DD",
+        "#BA7517","#E24B4A","#639922","#534AB7"
+    )
+)
+
+arrows_df <- data.frame(
+    x    = 1:7 + 0.38,
+    xend = 2:8 - 0.38,
+    y    = 1, yend = 1
+)
+
+ggplot(steps, aes(x = x, y = y)) +
+    geom_segment(
+        data = arrows_df,
+        aes(x=x, xend=xend, y=y, yend=yend),
+        arrow = arrow(length=unit(0.2,"cm"), type="closed"),
+        color = "gray70", linewidth = 0.7,
+        inherit.aes = FALSE
+    ) +
+    geom_point(aes(color = I(color)),
+               size = 20, shape = 16, alpha = 0.92) +
+    geom_text(aes(label = label),
+              size = 2.4, color = "white",
+              fontface = "bold", lineheight = 1.1) +
+    geom_text(aes(label = tool, y = 0.76),
+              size = 2.0, color = "gray40",
+              lineheight = 1.1) +
+    scale_x_continuous(limits = c(0.4, 8.6)) +
+    scale_y_continuous(limits = c(0.55, 1.3)) +
+    labs(
+        title = expression(
+            "Bioinformatics pipeline · " ~
+            italic("P. falciparum") ~
+            "drug resistance surveillance (PRJNA1465284)"
+        )
+    ) +
+    theme_void(base_size = 11) +
+    theme(
+        plot.title  = element_text(
+            face="bold", hjust=0.5, size=11,
+            margin=margin(b=10)),
+        plot.margin = margin(15,10,15,10)
+    )
+```
+
+The analysis pipeline consisted of eight sequential steps:
+
+**Step 1 — Data retrieval.** SRA runs were downloaded using `prefetch`
+and converted to FASTQ format using `fasterq-dump` (SRA Toolkit v3.x).
+Total data volume: ~6 GB across 326 paired-end FASTQ files.
+
+**Step 2 — Quality control.** Per-sample quality metrics were assessed
+using FastQC (v0.12), and aggregated reports generated with MultiQC (v1.x).
+Eight samples were excluded due to per-tile sequence quality failures
+(flowcell degradation). Systematic FAIL flags for sequence duplication,
+per-base sequence content, and GC content were expected and disregarded,
+as they reflect the biology of amplicon sequencing and the AT-rich
+*P. falciparum* genome (~80% AT).
+
+**Step 3 — Adapter trimming.** Residual adapters (detected in 355/652
+FASTQ files) and low-quality bases were removed using fastp (v0.23)
+with parameters: `--qualified_quality_phred 20`,
+`--unqualified_percent_limit 40`, `--length_required 50`,
+`--cut_tail --cut_tail_mean_quality 20`.
+
+**Step 4 — Reference alignment.** Paired trimmed reads were aligned to
+the *P. falciparum* 3D7 reference genome (PlasmoDB release 68) using
+BWA-MEM (v0.7.18) with the full pipeline:
+`bwa mem | samtools fixmate -m | samtools sort | samtools markdup`.
+Mean mapping rate: 99.87% across all 318 samples.
+
+**Step 5 — Variant calling.** Joint genotyping was performed using
+GATK HaplotypeCaller (v4.6.2) in GVCF mode with `--sample-ploidy 1`
+(haploid organism), restricted to the five resistance loci using a
+BED interval file. GenomicsDBImport and GenotypeGVCFs were applied
+for cohort-level joint genotyping. Hard filters were applied
+(QD < 2.0, FS > 60.0, MQ < 40.0, DP < 10).
+
+**Step 6 — Functional annotation.** Variants were annotated using
+SnpEff (v5.4) with the `Plasmodium_falciparum` database after
+chromosome name normalization (Pf3D7_XX_v3 → 1–14).
+Missense, frameshift, and stop-gained variants were extracted.
+
+**Step 7 — Population genetics.** Allele frequencies were computed
+with vcftools. Principal component analysis (PCA) and identity-by-descent
+(IBD) analyses were performed using PLINK v1.9 on 55 biallelic SNPs
+(genotyping rate: 90.0%). Kelch13 haplotype analysis was performed
+by manual inspection of co-segregating variants.
+
+---
+
+# Results
+
+## Sequencing Quality and Alignment Statistics
+
+Quality control identified 8 samples with per-tile sequence quality
+failures (flowcell defects) which were excluded, yielding a final
+cohort of 318 isolates. All remaining samples exhibited mapping rates
+exceeding 70%, with a mean mapping rate of **99.87%** against the Pf3D7
+reference genome, indicating high-quality sequencing data free of
+significant contamination.
+
+```{r alignment-summary}
+align_stats <- data.frame(
+    Metric = c(
+        "Total SRA runs downloaded",
+        "Samples excluded (per-tile QC failure)",
+        "Samples analyzed",
+        "Mean mapping rate",
+        "Samples with mapping rate > 95%",
+        "Total variants called (raw)",
+        "Variants passing quality filters",
+        "Genotyping rate (PCA dataset)"
+    ),
+    Value = c(
+        "326", "8", "318",
+        "99.87%", "318/318 (100%)",
+        "42", "42 (100%)",
+        "90.0%"
+    )
+)
+
+kable(align_stats,
+      caption = "Table 3. Sequencing and alignment summary statistics.",
+      col.names = c("Metric", "Value"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = FALSE,
+        position = "center"
+    )
+```
+
+## Variant Calling and Functional Annotation
+
+A total of 42 high-quality variants were identified across the five
+resistance loci, all passing hard filter criteria. Functional annotation
+identified 32 variants with predicted functional impact, including
+20 missense variants (MODERATE impact) and 12 high-impact variants
+(frameshift, stop-gained).
+
+```{r variants-by-locus}
+var_locus <- data.frame(
+    Locus = c("kelch13", "mdr1", "dhfr", "crt", "dhps"),
+    Total = c(29, 12, 9, 7, 6),
+    Missense = c(6, 4, 5, 4, 2),
+    High_impact = c(5, 5, 4, 3, 3)
+)
+
+kable(var_locus,
+      caption = "Table 4. Variant distribution across resistance loci.",
+      col.names = c("Locus", "Total variants",
+                    "Missense (MODERATE)", "High impact"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = FALSE,
+        position = "center"
+    ) |>
+    row_spec(0, bold = TRUE) |>
+    column_spec(1, bold = TRUE, italic = TRUE)
+```
+
+## WHO-Validated Resistance Mutations
+
+Seven WHO-validated resistance mutations were confirmed in this cohort.
+
+```{r who-mutations}
+who_muts <- data.frame(
+    Gene = c("dhfr", "dhfr", "dhfr",
+             "crt", "mdr1", "dhps", "kelch13"),
+    Mutation = c("N51I", "C59R", "S108N",
+                 "K76T", "Y184F", "A581G", "P441L"),
+    HGVS_p = c(
+        "p.Asn51Ile", "p.Cys59Arg", "p.Ser108Asn",
+        "p.Lys76Thr", "p.Tyr184Phe",
+        "p.Ala581Gly", "p.Pro441Leu"
+    ),
+    Freq = c("96.5%", "59.7%", "99.4%",
+             "81.0%", "0.9%", "0.9%", "4.1%"),
+    N_carriers = c("~307", "~190", "~316",
+                   "~257", "~3", "~3", "13"),
+    Drug = c("SP (pyrimethamine)", "SP (pyrimethamine)",
+             "SP (pyrimethamine)", "Chloroquine",
+             "Lumefantrine", "SP (sulfadoxine)",
+             "Artemisinin (ACT)"),
+    WHO_status = c(
+        "Validated", "Validated", "Validated",
+        "Validated", "Validated", "Validated",
+        "Validated (2023)"
+    )
+)
+
+kable(who_muts,
+      caption = paste(
+          "Table 5. WHO-validated resistance mutations identified",
+          "in Ethiopian P. falciparum isolates (n = 318)."
+      ),
+      col.names = c("Gene", "Mutation", "HGVS_p",
+                    "Allele Frequency", "Estimated Carriers",
+                    "Drug Class", "WHO Status"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = TRUE
+    ) |>
+    row_spec(7, bold = TRUE,
+             background = "#fff3cd") |>
+    column_spec(1, italic = TRUE) |>
+    column_spec(4, bold = TRUE)
+```
+
+## Allele Frequency Distribution
+
+```{r freq-figure, fig.cap="Figure 2. Allele frequencies of WHO-validated resistance mutations across five antimalarial drug resistance loci in 318 P. falciparum isolates from Ethiopian clinical recurrence sites. The dashed line indicates 25% frequency threshold. Colors represent drug classes: SP = sulfadoxine-pyrimethamine, CQ = chloroquine, LUM = lumefantrine, ACT = artemisinin-based combination therapies."}
+mutations <- data.frame(
+    Gene     = c("dhfr", "dhfr", "dhfr",
+                 "crt", "mdr1", "dhps", "kelch13"),
+    Mutation = c("N51I", "C59R", "S108N",
+                 "K76T", "Y184F", "A581G", "P441L"),
+    Drug     = c("SP", "SP", "SP",
+                 "CQ", "LUM", "SP", "ACT"),
+    Freq     = c(0.965, 0.597, 0.994,
+                 0.810, 0.009, 0.009, 0.042)
+)
+
+drug_colors <- c(
+    "SP"  = "#E24B4A",
+    "CQ"  = "#BA7517",
+    "LUM" = "#7F77DD",
+    "ACT" = "#1D9E75"
+)
+
+mutations$Gene <- factor(
+    mutations$Gene,
+    levels = c("dhfr", "crt", "mdr1", "dhps", "kelch13")
+)
+
+ggplot(mutations,
+       aes(x = reorder(Mutation, -Freq),
+           y = Freq * 100,
+           fill = Drug)) +
+    geom_bar(stat = "identity", width = 0.7,
+             color = "white", linewidth = 0.3) +
+    geom_hline(yintercept = 25, linetype = "dashed",
+               color = "gray50", linewidth = 0.5) +
+    scale_fill_manual(values = drug_colors,
+                      name = "Drug class") +
+    scale_y_continuous(
+        limits = c(0, 108),
+        labels = function(x) paste0(x, "%"),
+        expand = c(0, 0)
+    ) +
+    geom_text(
+        aes(label = paste0(round(Freq * 100, 1), "%")),
+        vjust = -0.5, size = 3.2, fontface = "bold"
+    ) +
+    facet_grid(. ~ Gene,
+               scales = "free_x",
+               space = "free") +
+    labs(
+        title = expression(
+            italic("P. falciparum") ~
+            "antimalarial resistance mutation frequencies"
+        ),
+        subtitle = paste(
+            "318 clinical isolates ·",
+            "malaria resurgence sites · Ethiopia"
+        ),
+        x = "Resistance mutation",
+        y = "Allele frequency (%)"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+        plot.title    = element_text(face = "bold", size = 13),
+        plot.subtitle = element_text(color = "gray40", size = 11),
+        strip.text    = element_text(face = "bold.italic", size = 11),
+        strip.background = element_rect(fill = "gray95",
+                                        color = NA),
+        axis.text.x   = element_text(angle = 45, hjust = 1,
+                                     face = "bold"),
+        legend.position = "right",
+        panel.grid.minor = element_blank()
+    )
+```
+
+## Population Structure (PCA)
+
+```{r pca-figure, fig.cap="Figure 3. Principal component analysis of 318 P. falciparum isolates based on 55 biallelic SNPs across five resistance loci. PC1 explains 54.9% of total variance, reflecting predominant population structuring likely driven by near-fixed resistance alleles."}
+pca <- tryCatch({
+    read.table(
+        "results/population_genetics/pca/pca_results.eigenvec",
+        header = FALSE
+    )
+}, error = function(e) NULL)
+
+if (!is.null(pca)) {
+    colnames(pca)[1:4] <- c("FID", "IID", "PC1", "PC2")
+    eigenval <- read.table(
+        "results/population_genetics/pca/pca_results.eigenval"
+    )
+    var_pc1 <- round(eigenval[1,1] / sum(eigenval[,1]) * 100, 1)
+    var_pc2 <- round(eigenval[2,1] / sum(eigenval[,1]) * 100, 1)
+
+    ggplot(pca, aes(x = PC1, y = PC2)) +
+        geom_point(alpha = 0.65, size = 2.2,
+                   color = "#1D9E75",
+                   shape = 16) +
+        labs(
+            title = expression(
+                "Population structure of Ethiopian" ~
+                italic("P. falciparum") ~ "isolates"
+            ),
+            subtitle = paste0(
+                "55 biallelic SNPs · 318 isolates · ",
+                "PCA (PLINK v1.9)"
+            ),
+            x = paste0("PC1 (", var_pc1, "% variance)"),
+            y = paste0("PC2 (", var_pc2, "% variance)")
+        ) +
+        theme_minimal(base_size = 12) +
+        theme(
+            plot.title    = element_text(face = "bold"),
+            plot.subtitle = element_text(color = "gray40"),
+            panel.grid.minor = element_blank()
+        )
+}
+```
+
+## Kelch13 Haplotype Analysis
+
+Kelch13 variants were identified at two distinct genomic positions,
+suggesting two independent lineages:
+
+**Lineage A (n = 1, SRR38527352):** A unique isolate carrying 21
+co-segregating variants across positions 1725354–1725459, all at
+identical minor allele frequency (~0.32%), indicating a highly
+divergent haplotype background. This isolate may represent an
+imported strain or a descendant of an ancient ancestor.
+
+**Lineage B (n = 13):** Thirteen isolates carried the P441L mutation
+(pos. 1725676, AF = 4.15%) without co-segregation with the Lineage A
+background variants. These 13 isolates were distributed across three
+numerically distinct SRR clusters (SRR38527224–242,
+SRR38527309–330, SRR38527427–431), consistent with geographic
+distribution across multiple clinical sites.
+
+```{r kelch13-table}
+kelch13_data <- data.frame(
+    Lineage = c("A", "B"),
+    N_isolates = c(1, 13),
+    Representative = c("SRR38527352", "SRR38527224–SRR38527431"),
+    Key_variant = c(
+        "21 co-segregating variants (1725354–1725459)",
+        "P441L only (1725676, G→A)"
+    ),
+    AF = c("0.32%", "4.1%"),
+    Interpretation = c(
+        "Divergent haplotype — possible import or ancient lineage",
+        "Clonal expansion across ≥3 geographic sites"
+    )
+)
+
+kable(kelch13_data,
+      caption = paste(
+          "Table 6. Kelch13 haplotype lineages identified",
+          "in Ethiopian P. falciparum isolates."
+      ),
+      col.names = c("Lineage", "N isolates",
+                    "Representative SRR IDs",
+                    "Key variant(s)", "Allele freq.",
+                    "Epidemiological interpretation"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = TRUE
+    ) |>
+    row_spec(2, bold = TRUE, background = "#fff3cd")
+```
+
+---
+
+# Discussion
+
+## High Prevalence of SP Resistance Markers
+
+The near-fixation of the *dhfr* triple mutant (N51I + C59R + S108N)
+at frequencies of 59.7–99.4% represents a critical public health
+concern. Sulfadoxine-pyrimethamine (SP) is currently recommended by
+the WHO for intermittent preventive treatment in pregnancy (IPTp) in
+sub-Saharan Africa. The extraordinarily high prevalence of SP resistance
+markers in Ethiopian clinical isolates raises serious questions about
+the efficacy of this prophylactic strategy in the region, consistent
+with concerns raised for East Africa more broadly.
+
+## Chloroquine Resistance Remains Dominant
+
+The *pfcrt*-K76T mutation, part of the CVIET haplotype associated
+with chloroquine resistance, was detected at 81% frequency.
+Although chloroquine was withdrawn as first-line therapy in Ethiopia
+over two decades ago, its use in prophylaxis and its potential
+reintroduction as combination partner necessitate continued monitoring
+of this marker.
+
+## Emerging Artemisinin Resistance — A Critical Signal
+
+The detection of *kelch13*-P441L at 4.1% frequency (13/318 isolates)
+in clinical samples from malaria resurgence sites represents the most
+clinically significant finding of this study. P441L was formally
+added to the WHO list of validated artemisinin partial resistance
+markers in 2023, following documentation in Eritrea and Ethiopia.
+
+The distribution of P441L carriers across three geographically
+distinct SRR clusters suggests that this mutation has achieved a
+foothold across multiple transmission foci, rather than being
+confined to a single introduction event. While 4.1% may appear
+modest, historical patterns from Southeast Asia demonstrate
+that kelch13 mutations can reach clinical relevance within
+a few transmission seasons once established.
+
+## Comparison with Published Literature
+
+The near-fixation of *dhfr* triple mutant alleles (N51I + C59R + S108N)
+observed here (96.5–99.4%) is consistent with findings from neighboring
+East African countries. Petros et al. [@petros2022ethiopia] reported
+similar *dhfr* triple mutant frequencies exceeding 90% in Ethiopian
+clinical isolates, while studies across the Horn of Africa document
+a systematic erosion of SP efficacy. These convergent findings strongly
+suggest that SP-based IPTp strategies require urgent re-evaluation in
+the Ethiopian clinical context.
+
+The detection of *kelch13*-P441L at 4.1% is concordant with the
+sentinel surveillance data compiled by the WHO in 2023
+[@who2023kelch13], which identified P441L as an emerging validated
+marker in Eritrea and Ethiopia specifically. Beshir et al.
+[@beshir2022p441l] documented P441L in the Greater Horn of Africa
+at frequencies between 2–6%, suggesting our findings reflect
+a regional trend rather than a local anomaly. The geographic
+distribution across three SRR clusters in our dataset further
+supports active multi-site dissemination rather than a single
+introduction event.
+
+## Public Health Implications
+
+The co-occurrence of high-frequency SP resistance markers and
+emerging ACT resistance represents a compound threat to malaria
+treatment efficacy in Ethiopia. If artemisinin partial resistance
+continues to increase from its current 4.1% prevalence, Ethiopia
+may face a scenario analogous to that observed in Southeast Asia,
+where *kelch13* mutations progressed from marginal frequencies to
+clinical dominance within five transmission seasons [@miotto2015genetic].
+Enhanced molecular surveillance programs, ideally integrated with
+clinical treatment outcome monitoring, should be prioritized to
+track the trajectory of P441L and any newly emerging *kelch13*
+mutations in the region.
+
+## Limitations
+
+Several limitations of this analysis warrant acknowledgment. First,
+the amplicon sequencing approach, while powerful for targeted
+resistance surveillance, provides limited genomic context for
+population structure inference. The 55 biallelic SNPs identified
+across ~15 kb are insufficient for robust IBD analysis or
+genome-wide association studies. Second, geographic metadata
+linking SRR identifiers to specific clinical sites was not
+available in the public dataset, limiting the geographic
+interpretation of P441L distribution. Third, the absence of
+matched clinical outcome data precludes direct assessment of
+treatment failure rates associated with the identified mutations.
+
+---
+
+# Conclusions
+
+This independent bioinformatics reanalysis of PRJNA1465284 confirms
+and extends the molecular epidemiology of antimalarial resistance in
+Ethiopian *P. falciparum*. The key findings are:
+
+1. The *dhfr* triple mutant conferring SP resistance is near-fixed
+   in clinical isolates from Ethiopian resurgence sites, questioning
+   the efficacy of SP-IPTp in this geographic context.
+
+2. Chloroquine resistance (*pfcrt*-K76T) remains highly prevalent
+   at 81%, consistent with historical trends in East Africa.
+
+3. The artemisinin resistance marker *kelch13*-P441L has been
+   detected at 4.1% across multiple geographic clusters, representing
+   an early but actionable warning signal for ACT efficacy in Ethiopia.
+
+These findings underscore the critical importance of systematic
+molecular surveillance programs in East Africa and support
+the urgent need for policy-level response to emerging ACT resistance.
+
+---
+
+# Reproducibility
+
+All analyses were performed on Ubuntu 24.04 LTS (AMD Ryzen 5 PRO,
+16 GB RAM, 12 CPUs) using conda/mamba environments.
+The complete pipeline, including all bash scripts and R code,
+is publicly available at:
+
+**GitHub:** [github.com/GenoLab-ga](https://github.com/GenoLab-ga)
+
+**GenoLabGab:** [genolabgab.vercel.app](https://genolabgab.vercel.app)
+
+```{r software-table}
+software <- data.frame(
+    Tool = c("FastQC", "MultiQC", "fastp", "BWA-MEM",
+             "samtools", "GATK", "SnpEff",
+             "vcftools", "PLINK", "R"),
+    Version = c("0.12", "1.x", "0.23", "0.7.18",
+                "1.x", "4.6.2", "5.4",
+                "0.1.16", "1.9", "4.x"),
+    Purpose = c(
+        "Per-sample QC", "Aggregate QC report",
+        "Adapter trimming", "Reference alignment",
+        "BAM processing", "Variant calling",
+        "Functional annotation",
+        "Allele frequencies / diversity",
+        "PCA / IBD", "Statistical analysis & figures"
+    )
+)
+
+kable(software,
+      caption = "Table 7. Software versions used in this analysis.",
+      col.names = c("Tool", "Version", "Purpose"),
+      booktabs = TRUE) |>
+    kable_styling(
+        bootstrap_options = c("striped", "hover", "condensed"),
+        full_width = FALSE,
+        position = "center"
+    )
+```
+
+---
+
+# Acknowledgements
+
+Raw sequencing data were generated by investigators at Brown University
+under grants ACDCP167916 (World Bank Africa CDC Regional Investment
+Financing Project) and R01AI177791 (NIH/NIAID). This independent
+reanalysis was conducted by GenoLabGab as part of a computational
+biology portfolio initiative focused on infectious diseases relevant
+to Central and East Africa.
+
+---
+
+*Report generated with Quarto · GenoLabGab · {{< meta date >}}*

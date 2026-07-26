@@ -1,0 +1,16 @@
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614117/ERR614117_1.fastq.gz -P fastq/SAMEA2567500/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614117/ERR614117_2.fastq.gz -P fastq/SAMEA2567500/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614149/ERR614149_1.fastq.gz -P fastq/SAMEA2567501/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614149/ERR614149_2.fastq.gz -P fastq/SAMEA2567501/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614226/ERR614226_1.fastq.gz -P fastq/SAMEA2567493/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614226/ERR614226_2.fastq.gz -P fastq/SAMEA2567493/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614321/ERR614321_1.fastq.gz -P fastq/SAMEA2567504/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614321/ERR614321_2.fastq.gz -P fastq/SAMEA2567504/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614430/ERR614430_1.fastq.gz -P fastq/SAMEA2567509/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR614/ERR614430/ERR614430_2.fastq.gz -P fastq/SAMEA2567509/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR615/ERR615110/ERR615110_1.fastq.gz -P fastq/SAMEA2567483/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR615/ERR615110/ERR615110_2.fastq.gz -P fastq/SAMEA2567483/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR626/ERR626457/ERR626457_1.fastq.gz -P fastq/SAMEA2567482/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR626/ERR626457/ERR626457_2.fastq.gz -P fastq/SAMEA2567482/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR626/ERR626462/ERR626462_1.fastq.gz -P fastq/SAMEA2567484/
+wget -c https://ftp.sra.ebi.ac.uk/vol1/fastq/ERR626/ERR626462/ERR626462_2.fastq.gz -P fastq/SAMEA2567484/

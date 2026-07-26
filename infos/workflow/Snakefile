@@ -1,0 +1,60 @@
+import os
+
+# ============================================================
+# CONFIG
+# ============================================================
+SAMPLES = [s.strip() for s in open("data/SRR_Acc_List.txt")]
+OUTDIR  = "data/results/tbprofiler_v6"
+FASTQDIR = "data/fastq"
+THREADS  = 10
+
+# ============================================================
+# RULE ALL — cibles finales
+# ============================================================
+rule all:
+    input:
+        expand(f"{OUTDIR}/results/{{sample}}.results.json", sample=SAMPLES),
+        "data/results/tbprofiler_v6/summary/all_samples.txt"
+
+# ============================================================
+# RULE TBPROFILER — profiling par sample
+# ============================================================
+rule tbprofiler:
+    input:
+        fastq = f"{FASTQDIR}/{{sample}}.fastq.gz"
+    output:
+        json = f"{OUTDIR}/results/{{sample}}.results.json",
+        txt  = f"{OUTDIR}/results/{{sample}}.results.txt",
+        csv  = f"{OUTDIR}/results/{{sample}}.results.csv"
+    log:
+        f"logs/tbprofiler/{{sample}}.log"
+    threads: THREADS
+    shell:
+        """
+        tb-profiler profile \
+            --read1 {input.fastq} \
+            --prefix {wildcards.sample} \
+            --dir {OUTDIR} \
+            --platform nanopore \
+            --threads {threads} \
+            --txt \
+            --csv \
+            > {log} 2>&1
+        """
+
+# ============================================================
+# RULE COLLATE — rapport consolidé tous samples
+# ============================================================
+rule collate:
+    input:
+        expand(f"{OUTDIR}/results/{{sample}}.results.json", sample=SAMPLES)
+    output:
+        "data/results/tbprofiler_v6/summary/all_samples.txt"
+    shell:
+        """
+        mkdir -p data/results/tbprofiler_v6/summary
+        tb-profiler collate \
+            --dir {OUTDIR} \
+            --prefix data/results/tbprofiler_v6/summary/all_samples \
+            --format txt
+        """

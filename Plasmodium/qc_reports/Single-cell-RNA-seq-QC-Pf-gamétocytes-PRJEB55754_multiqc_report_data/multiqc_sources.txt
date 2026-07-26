@@ -1,0 +1,9 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	ERR11471971_1	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471971_1_fastqc.zip
+FastQC	all_sections	ERR11471971_2	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471971_2_fastqc.zip
+FastQC	all_sections	ERR11471975_1	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471975_1_fastqc.zip
+FastQC	all_sections	ERR11471975_2	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471975_2_fastqc.zip
+FastQC	all_sections	ERR11471979_1	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471979_1_fastqc.zip
+FastQC	all_sections	ERR11471979_2	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471979_2_fastqc.zip
+FastQC	all_sections	ERR11471985_1	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471985_1_fastqc.zip
+FastQC	all_sections	ERR11471985_2	/home/karl/Documents/github_projet/Plasmodium/qc_reports/fastqc/ERR11471985_2_fastqc.zip

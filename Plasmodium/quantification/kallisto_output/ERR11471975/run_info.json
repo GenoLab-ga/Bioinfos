@@ -1,0 +1,14 @@
+{
+	"n_targets": 5791,
+	"n_bootstraps": 0,
+	"n_processed": 85584185,
+	"n_pseudoaligned": 75989083,
+	"n_unique": 69986554,
+	"p_pseudoaligned": 88.8,
+	"p_unique": 81.8,
+	"kallisto_version": "0.52.0",
+	"index_version": 13,
+	"k-mer length": 31,
+	"start_time": "Sun May 17 17:48:07 2026",
+	"call": "kallisto quant -i /home/karl/Documents/github_projet/Plasmodium/reference/Pfalciparum3D7_kallisto_index.idx -o /home/karl/Documents/github_projet/Plasmodium/quantification/kallisto_output/ERR11471975 -t 12 /home/karl/Documents/github_projet/Plasmodium/data/ERR11471975_1.fastq.gz /home/karl/Documents/github_projet/Plasmodium/data/ERR11471975_2.fastq.gz"
+}

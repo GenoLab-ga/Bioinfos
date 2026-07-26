@@ -1,0 +1,43 @@
+# tb-profiler error report
+
+* OS: linux
+* Program version: 6.7.0
+* Database version: {'name': 'who_v2+', 'repo': 'git@github.com:jodyphelan/tbdb.git', 'branch': 'who_v2+', 'commit': '7fe4364e', 'status': 'modified', 'author': 'jodyphelan', 'date': 'Thu Mar 12 18:19:10 2026 +0100', 'db-schema-version': '2.1.0', 'tb-profiler-version': '>=6.6.0,<7.0.0'}
+* Program call:
+```
+{'logging': 'INFO', 'debug': False, 'read1': 'data/fastq/SRR31099114.fastq.gz', 'read2': None, 'bam': '/home/karl/Documents/github_projet/infos/5793adbf-2dd8-474b-af8a-0c7ab41fad8c.bam', 'fasta': None, 'vcf': None, 'platform': 'nanopore', 'db': 'who_v2+', 'external_db': None, 'prefix': 'SRR31099114', 'csv': True, 'txt': True, 'text_template': None, 'docx': False, 'docx_template': None, 'docx_plugin': None, 'add_columns': None, 'add_mutation_metadata': False, 'dir': '/home/karl/Documents/github_projet/infos/data/results/tbprofiler_v6', 'depth': '0,10', 'af': '0,0.1', 'strand': '0,3', 'sv_depth': '0,10', 'sv_af': '0.5,0.9', 'sv_len': '100000,50000', 'mapper': 'minimap2', 'caller': 'bcftools', 'calling_params': None, 'kmer_counter': 'FastK', 'coverage_tool': 'samtools', 'suspect': False, 'spoligotype': False, 'call_whole_genome': False, 'snp_dist': None, 'snp_diff_db': None, 'snp_diff_no_store': False, 'no_trim': True, 'no_coverage_qc': False, 'no_samclip': False, 'no_delly': False, 'no_lineage': False, 'add_variant_annotations': False, 'threads': 10, 'ram': 2, 'implement_rules': False, 'snpeff_config': None, 'delly_vcf': None, 'supplementary_bam': None, 'low_dp_mask': None, 'save_low_dp_mask': False, 'consensus': False, 'db_dir': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler', 'no_clean': False, 'temp': '.', 'func': <function plugin_decorator.<locals>.wrapper at 0x79faffb063b0>, 'software_name': 'tbprofiler', 'version': '6.7.0', 'tmp_prefix': '5793adbf-2dd8-474b-af8a-0c7ab41fad8c', 'files_prefix': '/home/karl/Documents/github_projet/infos/5793adbf-2dd8-474b-af8a-0c7ab41fad8c', 'conf': {'db-schema-version': '2.1.0', 'snpEff_db': 'Mycobacterium_tuberculosis_h37rv_tbprofiler', 'drugs': ['rifampicin', 'rifapentine', 'isoniazid', 'ethambutol', 'pyrazinamide', 'moxifloxacin', 'levofloxacin', 'bedaquiline', 'delamanid', 'pretomanid', 'linezolid', 'streptomycin', 'amikacin', 'kanamycin', 'capreomycin', 'clofazimine', 'ethionamide', 'prothionamide', 'para-aminosalicylic_acid', 'cycloserine'], 'tb-profiler-version': '>=6.6.0,<7.0.0', 'type': 'reference', 'version': {'name': 'who_v2+', 'repo': 'git@github.com:jodyphelan/tbdb.git', 'branch': 'who_v2+', 'commit': '7fe4364e', 'status': 'modified', 'author': 'jodyphelan', 'date': 'Thu Mar 12 18:19:10 2026 +0100', 'db-schema-version': '2.1.0', 'tb-profiler-version': '>=6.6.0,<7.0.0'}, 'amplicon': False, 'files': {'snpEff_config': 'snpeff/snpEff.config', 'ref': 'genome.fasta', 'gff': 'genome.gff', 'bed': 'genes.bed', 'json_db': 'mutations.json', 'variables': 'variables.json', 'spoligotype_spacers': 'spoligotype_spacers.txt', 'spoligotype_annotations': 'spoligotype_list.csv', 'bedmask': 'mask.bed', 'rules': 'rules.yml', 'barcode': 'barcode.bed'}, 'snpEff_config': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/snpeff/snpEff.config', 'ref': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/genome.fasta', 'gff': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/genome.gff', 'bed': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/genes.bed', 'variables': {'db-schema-version': '2.1.0', 'snpEff_db': 'Mycobacterium_tuberculosis_h37rv_tbprofiler', 'drugs': ['rifampicin', 'rifapentine', 'isoniazid', 'ethambutol', 'pyrazinamide', 'moxifloxacin', 'levofloxacin', 'bedaquiline', 'delamanid', 'pretomanid', 'linezolid', 'streptomycin', 'amikacin', 'kanamycin', 'capreomycin', 'clofazimine', 'ethionamide', 'prothionamide', 'para-aminosalicylic_acid', 'cycloserine'], 'tb-profiler-version': '>=6.6.0,<7.0.0', 'type': 'reference', 'version': {'name': 'who_v2+', 'repo': 'git@github.com:jodyphelan/tbdb.git', 'branch': 'who_v2+', 'commit': '7fe4364e', 'status': 'modified', 'author': 'jodyphelan', 'date': 'Thu Mar 12 18:19:10 2026 +0100', 'db-schema-version': '2.1.0', 'tb-profiler-version': '>=6.6.0,<7.0.0'}, 'amplicon': False, 'files': {'snpEff_config': 'snpeff/snpEff.config', 'ref': 'genome.fasta', 'gff': 'genome.gff', 'bed': 'genes.bed', 'json_db': 'mutations.json', 'variables': 'variables.json', 'spoligotype_spacers': 'spoligotype_spacers.txt', 'spoligotype_annotations': 'spoligotype_list.csv', 'bedmask': 'mask.bed', 'rules': 'rules.yml', 'barcode': 'barcode.bed'}}, 'spoligotype_spacers': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/spoligotype_spacers.txt', 'spoligotype_annotations': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/spoligotype_list.csv', 'bedmask': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/mask.bed', 'rules': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/rules.yml', 'barcode': '/home/karl/miniforge3/envs/tbprofiler_env/share/tbprofiler/who_v2+/barcode.bed', 'variant_filters': {'depth_hard': 0, 'depth_soft': 10, 'af_hard': 0, 'af_soft': 0.1, 'strand_hard': 0, 'strand_soft': 3, 'sv_depth_hard': 0, 'sv_depth_soft': 10, 'sv_af_hard': 0.5, 'sv_af_soft': 0.9, 'sv_len_hard': 100000, 'sv_len_soft': 50000}}, 'plugins': ['default'], 'run_delly': True, 'samclip': True, 'coverage_qc': True, 'data_source': 'fastq', 'call_lineage': True}
+```
+## Traceback:
+```
+  File "/home/karl/miniforge3/envs/tbprofiler_env/bin/tb-profiler", line 755, in <module>
+    args.func(args)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/bin/tb-profiler", line 123, in wrapper
+    func(args)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/bin/tb-profiler", line 142, in main_profile
+    variants_profile = pp.run_profiler(args)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/cli.py", line 217, in run_profiler
+    get_vcf_file(args)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/cli.py", line 184, in get_vcf_file
+    args.vcf = get_vcf_from_bam(args)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/cli.py", line 156, in get_vcf_from_bam
+    vcf_obj = bam.call_variants(conf["ref"], caller=args.caller, filters = conf['variant_filters'], bed_file=conf["bed"], threads=args.threads, calling_params=args.calling_params, samclip = args.samclip, cli_args=vars(args))
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/bam.py", line 132, in call_variants
+    return caller.call_variants()
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/variant_calling.py", line 95, in call_variants
+    return self.run_calling(self.calling_cmd)
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/variant_calling.py", line 77, in run_calling
+    run_cmd_parallel_on_genome(cmd,self.ref_file,bed_file = self.bed_file,threads=self.threads,desc="Indexing variants")
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/utils.py", line 201, in run_cmd_parallel_on_genome
+    results = [r for r in tqdm(parallel(delayed(genome_job)(cmd,r) for r in regions),total=len(regions),desc=desc)]
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/pathogenprofiler/utils.py", line 201, in <listcomp>
+    results = [r for r in tqdm(parallel(delayed(genome_job)(cmd,r) for r in regions),total=len(regions),desc=desc)]
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/joblib/parallel.py", line 1682, in _get_outputs
+    yield from self._retrieve()
+  File "/home/karl/miniforge3/envs/tbprofiler_env/lib/python3.10/site-packages/joblib/parallel.py", line 1800, in _retrieve
+    time.sleep(0.01)
+```
+## Value:
+```
+```

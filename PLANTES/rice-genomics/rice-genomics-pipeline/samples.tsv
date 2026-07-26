@@ -1,0 +1,21 @@
+# Fichier des échantillons — projet PRJEB6180 (3000 Rice Genomes Project)
+# Format : sample_accession <TAB> run_accession <TAB> country <TAB> variety_group
+# 8 accessions — 5 pays : India (3), Bangladesh (2), Ivory Coast (1), Brazil (1), South Korea (1)
+# Source métadonnées : XML ENA via https://www.ebi.ac.uk/ena/browser/api/xml/{sample_accession}
+#
+# Groupes variétaux (Variety_Group(Tree) dans ENA) :
+#   Basmati/sadri    — riz aromatique, Asie du Sud
+#   Aus/boro         — riz de saison sèche, Bangladesh/Inde
+#   Tropical japonica — japonica tropical, Afrique de l'Ouest
+#   Indica           — sous-espèce majeure, Asie du Sud/Amériques
+#   Temperate japonica — japonica tempéré, Asie de l'Est
+
+sample_accession	run_accession	country	variety_group
+SAMEA2567493	ERR614226	India	Basmati/sadri
+SAMEA2567501	ERR614149	India	Aus/boro
+SAMEA2567504	ERR614321	India	Aus/boro
+SAMEA2567500	ERR614117	Bangladesh	Aus/boro
+SAMEA2567509	ERR614430	Bangladesh	Aus/boro
+SAMEA2567484	ERR626462	Ivory Coast	Tropical japonica
+SAMEA2567482	ERR626457	Brazil	Indica
+SAMEA2567483	ERR615110	South Korea	Temperate japonica

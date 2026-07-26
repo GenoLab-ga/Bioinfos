@@ -1,0 +1,17 @@
+# Fichier des échantillons sélectionnés — projet PRJEB6180 (3K Rice Genomes)
+# Format : sample_accession <TAB> run_accession <TAB> country <TAB> variety_group
+# Généré manuellement à partir de rice_metadata.tsv + PRJEB6180_full.tsv
+# 8 samples — 5 pays : India (3), Bangladesh (2), Ivory Coast (1), Brazil (1), South Korea (1)
+#
+# variety_group : Basmati/sadri | Aus/boro | Tropical japonica | Indica | Temperate japonica
+# Ces groupes correspondent aux sous-populations botaniques d'Oryza sativa
+
+sample_accession	run_accession	country	variety_group
+SAMEA2567493	ERR614226	India	Basmati/sadri
+SAMEA2567501	ERR614149	India	Aus/boro
+SAMEA2567504	ERR614321	India	Aus/boro
+SAMEA2567500	ERR614117	Bangladesh	Aus/boro
+SAMEA2567509	ERR614430	Bangladesh	Aus/boro
+SAMEA2567484	ERR626462	Ivory Coast	Tropical japonica
+SAMEA2567482	ERR626457	Brazil	Indica
+SAMEA2567483	ERR615110	South Korea	Temperate japonica

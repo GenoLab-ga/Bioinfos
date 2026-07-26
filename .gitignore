@@ -1,0 +1,39 @@
+# Données brutes et références génomiques (trop volumineuses pour Git)
+**/data/reference/
+**/data/raw/
+**/reference/
+**/tbdb/
+
+# Résultats de pipelines (régénérables, volumineux)
+**/results/
+**/logs/
+
+# Rapports QC volumineux
+**/qc/fastqc_reports/
+**/multiqc_report/
+**/multiqc_*_data/
+
+# Fichiers bioinfo binaires volumineux (filet de sécurité, quel que soit le dossier)
+*.bam
+*.bai
+*.sam
+*.fastq
+*.fastq.gz
+*.fq.gz
+*.vcf.gz.tbi
+*.fasta
+*.fa
+*.fai
+
+# Environnements et caches
+.snakemake/
+.nextflow/
+work/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Fichiers système
+.DS_Store
+*.swp
+Plasmodium/AQ Ab8RN6LlF2v4ox6k6cIIdP3c3z9XJ.txt

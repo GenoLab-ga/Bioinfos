@@ -1,0 +1,186 @@
+2026-06-28 16:28:02,579 NanoPlot 1.47.1 started with arguments Namespace(threads=8, verbose=False, store=False, raw=False, huge=False, outdir='data/qc/nanoplot/SRR31099114', no_static=False, prefix='', tsv_stats=False, only_report=False, info_in_report=False, maxlength=None, minlength=None, drop_outliers=False, downsample=None, loglength=False, percentqual=False, alength=False, minqual=None, runtime_until=None, readtype='1D', barcoded=False, no_supplementary=False, color='#4CB391', colormap='Greens', format=['png'], plots=['dot'], legacy=None, listcolors=False, listcolormaps=False, no_N50=False, N50=True, title=None, font_scale=1, dpi=300, hide_stats=False, fastq=['data/fastq/SRR31099114.fastq.gz'], fasta=None, fastq_rich=None, fastq_minimal=None, summary=None, bam=None, ubam=None, cram=None, pickle=None, feather=None, path='data/qc/nanoplot/SRR31099114/')
+2026-06-28 16:28:02,580 Python version is: 3.13.12 | packaged by conda-forge | (main, Feb  5 2026, 05:53:46) [GCC 14.3.0]
+2026-06-28 16:28:02,614 Nanoget: Starting to collect statistics from plain fastq file.
+2026-06-28 16:28:02,615 Nanoget: Decompressing gzipped fastq data/fastq/SRR31099114.fastq.gz
+2026-06-28 16:28:16,760 Reduced DataFrame memory usage from 4.899326324462891Mb to 4.899326324462891Mb
+2026-06-28 16:28:16,812 Nanoget: Gathered all metrics of 321074 reads
+2026-06-28 16:28:17,033 Calculated statistics
+2026-06-28 16:28:17,034 Using sequenced read lengths for plotting.
+2026-06-28 16:28:17,050 NanoPlot:  Valid color #4CB391.
+2026-06-28 16:28:17,050 NanoPlot:  Valid colormap Greens.
+2026-06-28 16:28:17,057 NanoPlot:  Creating length plots for Read length.
+2026-06-28 16:28:17,058 NanoPlot: Using 321074 reads with read length N50 of 884bp and maximum of 7507bp.
+2026-06-28 16:28:17,247 Chromium init'ed with kwargs {}
+2026-06-28 16:28:17,247 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:17,248 Temp directory created: /tmp/tmpwb07bk9v.
+2026-06-28 16:28:17,248 Opening browser.
+2026-06-28 16:28:17,248 Temp directory created: /tmp/tmpjj714xcf.
+2026-06-28 16:28:17,248 Temporary directory at: /tmp/tmpjj714xcf
+2026-06-28 16:28:17,573 Conforming 1 to file:///tmp/tmpwb07bk9v/index.html
+2026-06-28 16:28:18,884 Getting tab from queue (has 1)
+2026-06-28 16:28:18,884 Got 094F
+2026-06-28 16:28:19,040 Reloading tab 094F before return.
+2026-06-28 16:28:19,177 Putting tab 094F back (queue size: 0).
+2026-06-28 16:28:19,178 Waiting for all cleanups to finish.
+2026-06-28 16:28:19,178 Exiting Kaleido.
+2026-06-28 16:28:19,178 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:19,178 shutil.rmtree worked.
+2026-06-28 16:28:19,178 Closing browser.
+2026-06-28 16:28:19,185 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:19,186 shutil.rmtree worked.
+2026-06-28 16:28:19,186 Closing browser.
+2026-06-28 16:28:19,186 Cancelling tasks.
+2026-06-28 16:28:19,186 Exiting Kaleido/Choreo.
+2026-06-28 16:28:19,303 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:19,303 shutil.rmtree worked.
+2026-06-28 16:28:19,303 Cancelling tasks.
+2026-06-28 16:28:19,303 Exiting Kaleido/Choreo.
+2026-06-28 16:28:19,313 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:19,313 shutil.rmtree worked.
+2026-06-28 16:28:19,389 Saved data/qc/nanoplot/SRR31099114/WeightedHistogramReadlength.png as png (dpi=300)
+2026-06-28 16:28:19,450 Chromium init'ed with kwargs {}
+2026-06-28 16:28:19,450 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:19,450 Temp directory created: /tmp/tmps1ie3qtv.
+2026-06-28 16:28:19,450 Opening browser.
+2026-06-28 16:28:19,451 Temp directory created: /tmp/tmpk2a3aeua.
+2026-06-28 16:28:19,451 Temporary directory at: /tmp/tmpk2a3aeua
+2026-06-28 16:28:19,758 Conforming 1 to file:///tmp/tmps1ie3qtv/index.html
+2026-06-28 16:28:21,093 Getting tab from queue (has 1)
+2026-06-28 16:28:21,093 Got F961
+2026-06-28 16:28:21,247 Reloading tab F961 before return.
+2026-06-28 16:28:21,381 Putting tab F961 back (queue size: 0).
+2026-06-28 16:28:21,382 Waiting for all cleanups to finish.
+2026-06-28 16:28:21,382 Exiting Kaleido.
+2026-06-28 16:28:21,382 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:21,382 shutil.rmtree worked.
+2026-06-28 16:28:21,382 Closing browser.
+2026-06-28 16:28:21,387 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:21,387 shutil.rmtree worked.
+2026-06-28 16:28:21,387 Closing browser.
+2026-06-28 16:28:21,387 Cancelling tasks.
+2026-06-28 16:28:21,387 Exiting Kaleido/Choreo.
+2026-06-28 16:28:21,508 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:21,508 shutil.rmtree worked.
+2026-06-28 16:28:21,509 Cancelling tasks.
+2026-06-28 16:28:21,509 Exiting Kaleido/Choreo.
+2026-06-28 16:28:21,575 Saved data/qc/nanoplot/SRR31099114/WeightedLogTransformed_HistogramReadlength.png as png (dpi=300)
+2026-06-28 16:28:21,619 Chromium init'ed with kwargs {}
+2026-06-28 16:28:21,619 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:21,620 Temp directory created: /tmp/tmputwbq8tm.
+2026-06-28 16:28:21,620 Opening browser.
+2026-06-28 16:28:21,620 Temp directory created: /tmp/tmp_9ht4wdq.
+2026-06-28 16:28:21,621 Temporary directory at: /tmp/tmp_9ht4wdq
+2026-06-28 16:28:21,974 Conforming 1 to file:///tmp/tmputwbq8tm/index.html
+2026-06-28 16:28:23,266 Getting tab from queue (has 1)
+2026-06-28 16:28:23,267 Got 801E
+2026-06-28 16:28:23,417 Reloading tab 801E before return.
+2026-06-28 16:28:23,552 Putting tab 801E back (queue size: 0).
+2026-06-28 16:28:23,553 Waiting for all cleanups to finish.
+2026-06-28 16:28:23,553 Exiting Kaleido.
+2026-06-28 16:28:23,553 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:23,553 shutil.rmtree worked.
+2026-06-28 16:28:23,553 Closing browser.
+2026-06-28 16:28:23,558 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:23,558 shutil.rmtree worked.
+2026-06-28 16:28:23,558 Closing browser.
+2026-06-28 16:28:23,559 Cancelling tasks.
+2026-06-28 16:28:23,559 Exiting Kaleido/Choreo.
+2026-06-28 16:28:23,679 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:23,679 shutil.rmtree worked.
+2026-06-28 16:28:23,679 Cancelling tasks.
+2026-06-28 16:28:23,679 Exiting Kaleido/Choreo.
+2026-06-28 16:28:23,738 Saved data/qc/nanoplot/SRR31099114/Non_weightedHistogramReadlength.png as png (dpi=300)
+2026-06-28 16:28:23,751 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:23,751 shutil.rmtree worked.
+2026-06-28 16:28:23,751 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:23,751 shutil.rmtree worked.
+2026-06-28 16:28:23,787 Chromium init'ed with kwargs {}
+2026-06-28 16:28:23,787 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:23,787 Temp directory created: /tmp/tmpb9hpmpwx.
+2026-06-28 16:28:23,787 Opening browser.
+2026-06-28 16:28:23,788 Temp directory created: /tmp/tmpccluc5ho.
+2026-06-28 16:28:23,788 Temporary directory at: /tmp/tmpccluc5ho
+2026-06-28 16:28:24,115 Conforming 1 to file:///tmp/tmpb9hpmpwx/index.html
+2026-06-28 16:28:25,388 Getting tab from queue (has 1)
+2026-06-28 16:28:25,388 Got 36AB
+2026-06-28 16:28:25,525 Reloading tab 36AB before return.
+2026-06-28 16:28:25,652 Putting tab 36AB back (queue size: 0).
+2026-06-28 16:28:25,652 Waiting for all cleanups to finish.
+2026-06-28 16:28:25,652 Exiting Kaleido.
+2026-06-28 16:28:25,652 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:25,653 shutil.rmtree worked.
+2026-06-28 16:28:25,653 Closing browser.
+2026-06-28 16:28:25,658 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:25,658 shutil.rmtree worked.
+2026-06-28 16:28:25,658 Closing browser.
+2026-06-28 16:28:25,658 Cancelling tasks.
+2026-06-28 16:28:25,658 Exiting Kaleido/Choreo.
+2026-06-28 16:28:25,780 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:25,780 shutil.rmtree worked.
+2026-06-28 16:28:25,780 Cancelling tasks.
+2026-06-28 16:28:25,780 Exiting Kaleido/Choreo.
+2026-06-28 16:28:25,841 Saved data/qc/nanoplot/SRR31099114/Non_weightedLogTransformed_HistogramReadlength.png as png (dpi=300)
+2026-06-28 16:28:25,841 NanoPlot: Creating yield by minimal length plot for Read length.
+2026-06-28 16:28:25,865 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:25,865 shutil.rmtree worked.
+2026-06-28 16:28:26,010 Chromium init'ed with kwargs {}
+2026-06-28 16:28:26,010 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:26,011 Temp directory created: /tmp/tmpoprejzi3.
+2026-06-28 16:28:26,011 Opening browser.
+2026-06-28 16:28:26,011 Temp directory created: /tmp/tmpyl3vjpza.
+2026-06-28 16:28:26,011 Temporary directory at: /tmp/tmpyl3vjpza
+2026-06-28 16:28:26,366 Conforming 1 to file:///tmp/tmpoprejzi3/index.html
+2026-06-28 16:28:27,763 Getting tab from queue (has 1)
+2026-06-28 16:28:27,764 Got D320
+2026-06-28 16:28:29,444 Reloading tab D320 before return.
+2026-06-28 16:28:29,696 Putting tab D320 back (queue size: 0).
+2026-06-28 16:28:29,697 Waiting for all cleanups to finish.
+2026-06-28 16:28:29,697 Exiting Kaleido.
+2026-06-28 16:28:29,697 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:29,698 shutil.rmtree worked.
+2026-06-28 16:28:29,698 Closing browser.
+2026-06-28 16:28:29,700 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:29,700 shutil.rmtree worked.
+2026-06-28 16:28:29,700 Closing browser.
+2026-06-28 16:28:29,700 Cancelling tasks.
+2026-06-28 16:28:29,700 Exiting Kaleido/Choreo.
+2026-06-28 16:28:29,819 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:29,819 shutil.rmtree worked.
+2026-06-28 16:28:29,819 Cancelling tasks.
+2026-06-28 16:28:29,819 Exiting Kaleido/Choreo.
+2026-06-28 16:28:29,921 Saved data/qc/nanoplot/SRR31099114/Yield_By_Length.png as png (dpi=300)
+2026-06-28 16:28:29,921 Created length plots
+2026-06-28 16:28:29,925 NanoPlot: Creating Read lengths vs Average read quality plots using 321074 reads.
+2026-06-28 16:28:30,048 Chromium init'ed with kwargs {}
+2026-06-28 16:28:30,048 Found chromium path: /home/karl/.local/share/choreographer/deps/chrome-linux64/chrome
+2026-06-28 16:28:30,048 Temp directory created: /tmp/tmp4fs59uqv.
+2026-06-28 16:28:30,049 Opening browser.
+2026-06-28 16:28:30,049 Temp directory created: /tmp/tmpiacpjc1e.
+2026-06-28 16:28:30,050 Temporary directory at: /tmp/tmpiacpjc1e
+2026-06-28 16:28:30,365 Conforming 1 to file:///tmp/tmp4fs59uqv/index.html
+2026-06-28 16:28:31,617 Getting tab from queue (has 1)
+2026-06-28 16:28:31,617 Got 8D87
+2026-06-28 16:28:33,382 Reloading tab 8D87 before return.
+2026-06-28 16:28:33,647 Putting tab 8D87 back (queue size: 0).
+2026-06-28 16:28:33,648 Waiting for all cleanups to finish.
+2026-06-28 16:28:33,648 Exiting Kaleido.
+2026-06-28 16:28:33,648 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:33,648 shutil.rmtree worked.
+2026-06-28 16:28:33,648 Closing browser.
+2026-06-28 16:28:33,649 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:33,650 shutil.rmtree worked.
+2026-06-28 16:28:33,650 Closing browser.
+2026-06-28 16:28:33,650 Cancelling tasks.
+2026-06-28 16:28:33,650 Exiting Kaleido/Choreo.
+2026-06-28 16:28:33,820 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:33,820 shutil.rmtree worked.
+2026-06-28 16:28:33,820 Cancelling tasks.
+2026-06-28 16:28:33,820 Exiting Kaleido/Choreo.
+2026-06-28 16:28:33,902 Saved data/qc/nanoplot/SRR31099114/LengthvsQualityScatterPlot_dot.png as png (dpi=300)
+2026-06-28 16:28:33,902 Created LengthvsQual plot
+2026-06-28 16:28:33,903 Writing html report.
+2026-06-28 16:28:33,908 Finished!
+2026-06-28 16:28:33,974 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:33,974 shutil.rmtree worked.
+2026-06-28 16:28:33,974 TemporaryDirectory.cleanup() worked.
+2026-06-28 16:28:33,974 shutil.rmtree worked.
