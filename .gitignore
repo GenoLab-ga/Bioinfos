@@ -37,3 +37,5 @@ __pycache__/
 .DS_Store
 *.swp
 Plasmodium/AQ Ab8RN6LlF2v4ox6k6cIIdP3c3z9XJ.txt
+*.qza
+mine soil/data/manifest/
